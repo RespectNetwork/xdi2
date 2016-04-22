@@ -291,8 +291,9 @@ public class XDIHttpClient extends XDIAbstractClient<TransportMessagingResponse>
 	}
 
 	private HttpURLConnection connect() throws Xdi2ClientException, IOException {
-
-		if (this.getHttpURLConnection() != null) return this.getHttpURLConnection();
+	    //Bug Fix : https://github.com/projectdanube/xdi2/issues/46 
+	    //For each request we should have a new object of HttpURLConnection, it should not be shared across requests.    
+		//if (this.getHttpURLConnection() != null) return this.getHttpURLConnection();
 
 		if (this.getXdiEndpointUri() == null) throw new Xdi2ClientException("No URL to connect to.");
 
@@ -325,8 +326,8 @@ public class XDIHttpClient extends XDIAbstractClient<TransportMessagingResponse>
 		// done
 
 		if (log.isDebugEnabled()) log.debug("Connected successfully.");
-
-		this.setHttpURLConnection(httpURLConnection);
+		//Bug Fix : https://github.com/projectdanube/xdi2/issues/46
+		//this.setHttpURLConnection(httpURLConnection);
 		return httpURLConnection;
 	}
 
