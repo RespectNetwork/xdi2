@@ -191,10 +191,10 @@ public class JSONGraph extends AbstractGraph implements Graph {
 				throw new Xdi2RuntimeException("Cannot load JSON at " + id + ": " + ex.getMessage(), ex);
 			}
 		} finally {
+		// Statement below causing ConcurrentModificationException. Commenting till the time we solve this issue.    
+		//	if (log.isTraceEnabled()) log.trace("load( " + id + " , " + jsonObject + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )");
 
-			if (log.isTraceEnabled()) log.trace("load( " + id + " , " + jsonObject + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )");
-
-			if (this.getLogEnabled()) this.logBuffer.append("load( " + id + " , " + jsonObject + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )\n");
+		//	if (this.getLogEnabled()) this.logBuffer.append("load( " + id + " , " + jsonObject + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )\n");
 		}
 	}
 
@@ -234,10 +234,10 @@ public class JSONGraph extends AbstractGraph implements Graph {
 				throw new Xdi2RuntimeException("Cannot loadWithPrefix JSON at " + id + ": " + ex.getMessage(), ex);
 			}
 		} finally {
+		 // Statement below may cause ConcurrentModificationException. Commenting till the time we solve this issue.
+		//	if (log.isTraceEnabled()) log.trace("loadWithPrefix( " + id + " , " + jsonObjects + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )");
 
-			if (log.isTraceEnabled()) log.trace("loadWithPrefix( " + id + " , " + jsonObjects + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )");
-
-			if (this.getLogEnabled()) this.logBuffer.append("loadWithPrefix( " + id + " , " + jsonObjects + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )\n");
+		//	if (this.getLogEnabled()) this.logBuffer.append("loadWithPrefix( " + id + " , " + jsonObjects + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )\n");
 		}
 	}
 
