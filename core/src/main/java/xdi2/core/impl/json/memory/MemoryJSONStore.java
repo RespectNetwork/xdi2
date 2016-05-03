@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-
+import java.util.concurrent.ConcurrentHashMap;
 import com.google.gson.JsonObject;
 
 import xdi2.core.impl.json.AbstractJSONStore;
@@ -17,7 +17,7 @@ public class MemoryJSONStore extends AbstractJSONStore implements JSONStore {
 
 	public MemoryJSONStore() {
 
-		this.jsonObjects = new HashMap<String, JsonObject> ();
+		this.jsonObjects = new ConcurrentHashMap<String, JsonObject> ();
 	}
 
 	@Override
