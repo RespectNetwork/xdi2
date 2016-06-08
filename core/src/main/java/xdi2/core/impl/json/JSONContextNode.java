@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
-
+import java.util.concurrent.CopyOnWriteArraySet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -232,7 +232,10 @@ public class JSONContextNode extends AbstractContextNode implements ContextNode 
 
 		JsonObject jsonObject = ((JSONGraph) this.getGraph()).jsonLoad(this.getXDIAddress().toString());
 
-		final Set<Entry<String, JsonElement>> entrySet = new HashSet<Entry<String, JsonElement>> (jsonObject.entrySet());
+		final Set<Entry<String, JsonElement>> entrySet;
+		synchronized (this) {
+		    entrySet = new CopyOnWriteArraySet<Entry<String, JsonElement>>(jsonObject.entrySet());
+                }
 
 		return new DescendingIterator<Entry<String, JsonElement>, Relation> (entrySet.iterator()) {
 

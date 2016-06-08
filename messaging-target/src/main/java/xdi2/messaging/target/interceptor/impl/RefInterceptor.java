@@ -625,7 +625,7 @@ public class RefInterceptor extends AbstractInterceptor<MessagingTarget> impleme
 	private static Relation popRefRepRelationPerOperation(ExecutionContext executionContext) {
 
 		Deque<Relation> refRepRelations = getRefRepRelationsPerOperation(executionContext);
-		if (refRepRelations.isEmpty()) return null;
+		if (refRepRelations == null || refRepRelations.isEmpty()) return null;
 
 		Relation refRepRelation = refRepRelations.pop();
 
