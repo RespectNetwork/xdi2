@@ -3,11 +3,13 @@ package xdi2.core.impl.json;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +32,7 @@ public class JSONGraph extends AbstractGraph implements Graph {
 
 	private static final long serialVersionUID = -7459785412219244590L;
 
-	private static final Logger log = LoggerFactory.getLogger(JSONContextNode.class);
+	private static final Logger log = LoggerFactory.getLogger(JSONGraph.class);
 
 	private final JSONStore jsonStore;
 
@@ -51,7 +53,7 @@ public class JSONGraph extends AbstractGraph implements Graph {
 
 		this.jsonRootContextNode = new JSONContextNode(this, null, null, XDIConstants.XDI_ADD_ROOT);
 
-		this.jsonObjectsCached = new HashMap<String, JsonObject> ();
+		this.jsonObjectsCached = new ConcurrentHashMap<String, JsonObject> ();
 		this.jsonObjectsCachedWithPrefix = new HashSet<String> ();
 
 		this.useCache = false;
@@ -191,7 +193,6 @@ public class JSONGraph extends AbstractGraph implements Graph {
 				throw new Xdi2RuntimeException("Cannot load JSON at " + id + ": " + ex.getMessage(), ex);
 			}
 		} finally {
-
 			if (log.isTraceEnabled()) log.trace("load( " + id + " , " + jsonObject + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )");
 
 			if (this.getLogEnabled()) this.logBuffer.append("load( " + id + " , " + jsonObject + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )\n");
@@ -234,8 +235,7 @@ public class JSONGraph extends AbstractGraph implements Graph {
 				throw new Xdi2RuntimeException("Cannot loadWithPrefix JSON at " + id + ": " + ex.getMessage(), ex);
 			}
 		} finally {
-
-			if (log.isTraceEnabled()) log.trace("loadWithPrefix( " + id + " , " + jsonObjects + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )");
+		    if (log.isTraceEnabled()) log.trace("loadWithPrefix( " + id + " , " + jsonObjects + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )");
 
 			if (this.getLogEnabled()) this.logBuffer.append("loadWithPrefix( " + id + " , " + jsonObjects + " , cache " + (jsonObjectCached != null ? "HIT" : "MISS") + " )\n");
 		}

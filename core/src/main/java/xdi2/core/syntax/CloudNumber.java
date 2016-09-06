@@ -1,5 +1,7 @@
 package xdi2.core.syntax;
 
+import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,9 +9,10 @@ import xdi2.core.constants.XDIConstants;
 import xdi2.core.features.nodetypes.XdiEntitySingleton;
 import xdi2.core.features.nodetypes.XdiPeerRoot;
 
-public class CloudNumber {
+public class CloudNumber implements Serializable{
 
-	private static final Logger log = LoggerFactory.getLogger(CloudNumber.class);
+	transient private static final Logger log = LoggerFactory.getLogger(CloudNumber.class);
+	private final static long serialVersionUID = 1L;
 
 	private XDIAddress XDIaddress;
 	private XDIArc peerRootXDIArc;
